@@ -1,7 +1,3 @@
-import 'package:films_and_series/config.dart';
-import 'package:films_and_series/films_and_series/models/search_result.dart';
-import 'package:films_and_series/films_and_series/pages/search_results_page.dart';
-import 'package:films_and_series/films_and_series/services/omdb_service.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -13,12 +9,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
-      home: SearchResultsPage(),
+      home: Scaffold(body: Center(child: Text('Welcome to the Workshop!'),)),
     );
   }
 }
-
-
-
-
-
