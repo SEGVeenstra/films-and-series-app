@@ -1,8 +1,10 @@
 class SearchResult {
   final int count;
   final List<Result> results;
+  final bool response;
+  final String error;
 
-  SearchResult(this.count,this.results);
+  SearchResult(this.count,this.results, this.response, this.error);
 }
 
 class Result {

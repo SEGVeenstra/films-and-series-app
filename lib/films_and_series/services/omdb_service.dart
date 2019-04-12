@@ -16,11 +16,13 @@ class OmdbService {
       var data = json.decode(result.body);
       var searchResults = data['Search'] as List;
       var count = int.parse(data['totalResults']);
+      var response = data['Response'] == "True";
+      var error = data['Error'];
 
       var results = searchResults.map((r) =>
             Result(r['imdbID'], r['Title'], r['Year'], r['Type'], r['Poster'])).toList();
 
-      return SearchResult(count, results);
+      return SearchResult(count, results, response, error);
     }
     return null;
   }
