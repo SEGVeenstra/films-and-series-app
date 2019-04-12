@@ -8,8 +8,8 @@ import 'package:http/http.dart' as http;
 class OmdbService {
   static const _baseUrl = 'http://www.omdbapi.com/';
 
-  Future<List<SearchResult>> search(String text) async {
-    var url = "$_baseUrl?apikey=$key&s=$text";
+  Future<List<SearchResult>> search(String text, int page) async {
+    var url = "$_baseUrl?apikey=$key&s=$text&page=$page";
     var result = await http.get(url);
 
     if(result.statusCode == 200) {

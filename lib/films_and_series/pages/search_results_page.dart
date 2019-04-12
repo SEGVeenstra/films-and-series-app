@@ -10,6 +10,8 @@ class SearchResultsPage extends StatefulWidget {
 
 class _SearchResultsPageState extends State<SearchResultsPage> {
   String _query = "iron";
+  int _page = 1;
+
   var _service = OmdbService();
   final _searchTextController = TextEditingController();
 
@@ -17,6 +19,13 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
     setState(() {
       _query = text;
       _searchTextController.text = '';
+      _page = 1;
+    });
+  }
+
+  _setPage(int page) {
+    setState(() {
+      _page = page;
     });
   }
 
@@ -50,12 +59,28 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
         ],
       ),
       body: _getResult(),
+      bottomNavigationBar: Container(color: Colors.amber, child: Theme(data: ThemeData.light(), child:  _getPaginationButtons())),
+    );
+  }
+
+  Widget _getPaginationButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        IconButton(iconSize: 40.0, icon: Icon(Icons.keyboard_arrow_left,), onPressed: _page > 1 ? (){
+          _setPage(_page-1);
+        } : null,),
+        InkWell(child: Text("$_page", style: TextStyle(color: Colors.black, fontSize: 24.0, fontWeight: FontWeight.bold),),),
+        IconButton(iconSize: 40.0, icon: Icon(Icons.keyboard_arrow_right,), onPressed: () {
+          _setPage(_page+1);
+        },),
+      ],
     );
   }
 
   Widget _getResult() {
     return FutureBuilder<List<SearchResult>>(
-      future: _service.search(_query),
+      future: _service.search(_query, _page),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(itemBuilder: (context, index) {
