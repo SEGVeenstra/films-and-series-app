@@ -79,13 +79,13 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
   }
 
   Widget _getResult() {
-    return FutureBuilder<List<SearchResult>>(
+    return FutureBuilder<SearchResult>(
       future: _service.search(_query, _page),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(itemBuilder: (context, index) {
-            if (index < snapshot.data.length)
-              return ResultTile(snapshot.data[index]);
+            if (index < snapshot.data.results.length)
+              return ResultTile(snapshot.data.results[index]);
           });
         } else {
           return Center(

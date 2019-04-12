@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class ResultTile extends StatelessWidget {
 
-  final SearchResult _result;
+  final Result _result;
 
   ResultTile(this._result);
 

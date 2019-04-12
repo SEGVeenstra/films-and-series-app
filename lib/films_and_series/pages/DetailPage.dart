@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class DetailPage extends StatelessWidget {
 
-  final SearchResult _searchResult;
+  final Result _searchResult;
 
   DetailPage(this._searchResult);
 

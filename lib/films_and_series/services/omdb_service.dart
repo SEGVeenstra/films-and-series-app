@@ -8,17 +8,19 @@ import 'package:http/http.dart' as http;
 class OmdbService {
   static const _baseUrl = 'http://www.omdbapi.com/';
 
-  Future<List<SearchResult>> search(String text, int page) async {
+  Future<SearchResult> search(String text, int page) async {
     var url = "$_baseUrl?apikey=$key&s=$text&page=$page";
     var result = await http.get(url);
 
     if(result.statusCode == 200) {
       var data = json.decode(result.body);
       var searchResults = data['Search'] as List;
+      var count = int.parse(data['totalResults']);
 
-      return searchResults.map((r) =>
-            SearchResult(r['imdbID'], r['Title'], r['Year'], r['Type'], r['Poster'])).toList();
+      var results = searchResults.map((r) =>
+            Result(r['imdbID'], r['Title'], r['Year'], r['Type'], r['Poster'])).toList();
 
+      return SearchResult(count, results);
     }
     return null;
   }
