@@ -15,12 +15,12 @@ class OmdbService {
     if(result.statusCode == 200) {
       var data = json.decode(result.body);
       var searchResults = data['Search'] as List;
-      var count = int.parse(data['totalResults']);
+      var count = data['totalResults'] != null ? int.tryParse(data['totalResults']) : null;
       var response = data['Response'] == "True";
       var error = data['Error'];
 
-      var results = searchResults.map((r) =>
-            Result(r['imdbID'], r['Title'], r['Year'], r['Type'], r['Poster'])).toList();
+      var results = response ? searchResults.map((r) =>
+            Result(r['imdbID'], r['Title'], r['Year'], r['Type'], r['Poster'])).toList() : null;
 
       return SearchResult(count, results, response, error);
     }
