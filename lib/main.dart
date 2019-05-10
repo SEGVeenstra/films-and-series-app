@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:films_and_series/films_and_series/pages/results_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
-      home: Scaffold(body: Center(child: Text('Welcome to the Workshop!'),)),
+      home:ResultsPage(),
     );
   }
 }
