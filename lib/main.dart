@@ -12,6 +12,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final _service = OmdbService();
 
+  var _query = "";
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,7 +21,13 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData.dark(),
       home: Scaffold(
           appBar: AppBar(
-            title: TextField(),
+            title: TextField(
+              onChanged: (text){
+                setState(() {
+                  _query = text;
+                });
+              },
+            ),
             leading: Icon(Icons.search),
             actions: <Widget>[
               IconButton(
@@ -28,7 +36,7 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
           body: FutureBuilder<SearchResult>(
-            future: _service.search("Harry potter", 1),
+            future: _service.search(_query, 1),
             builder: (context, snapshot) {
               if (!snapshot.hasData)
                 return Center(
