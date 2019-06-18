@@ -29,11 +29,6 @@ class _MyAppState extends State<MyApp> {
               },
             ),
             leading: Icon(Icons.search),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.close),
-              )
-            ],
           ),
           body: _query.length > 2 ? FutureBuilder<SearchResult>(
             future: _service.search(_query, 1),
