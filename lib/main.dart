@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
               )
             ],
           ),
-          body: FutureBuilder<SearchResult>(
+          body: _query.length > 2 ? FutureBuilder<SearchResult>(
             future: _service.search(_query, 1),
             builder: (context, snapshot) {
               if (!snapshot.hasData)
@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
                 );
               }
             },
-          )),
+          ): Center(child: Text("Type at least 3 or more characters"),)),
     );
   }
 }
