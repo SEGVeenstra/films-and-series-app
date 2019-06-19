@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
                       List.generate(snapshot.data.results.length, (index) {
                     return ListTile(
                       onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(snapshot.data.results[index], _service)));
                       },
                       title: Text(snapshot.data.results[index].title),
                       leading:
@@ -64,9 +64,15 @@ class _MyAppState extends State<MyApp> {
 }
 
 class DetailPage extends StatelessWidget {
+
+  final Result _searchResult;
+  final OmdbService _service;
+
+  DetailPage(this._searchResult, this._service);
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold();
   }
 }
 
