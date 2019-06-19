@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
                       },
                       title: Text(snapshot.data.results[index].title),
                       leading:
-                          Image.network(snapshot.data.results[index].poster),
+                          Hero(tag: snapshot.data.results[index].id , child: Image.network(snapshot.data.results[index].poster)),
                       subtitle: Text(snapshot.data.results[index].year),
                     );
                   }),
@@ -77,7 +77,7 @@ class DetailPage extends StatelessWidget {
       appBar: AppBar(title: Text(_searchResult.title),),
       body: Column(
         children: <Widget>[
-          Image.network(_searchResult.poster, height: 300.0, width: double.maxFinite, alignment: Alignment.center,),
+          Hero(tag: _searchResult.id, child: Image.network(_searchResult.poster, height: 300.0, width: double.maxFinite, alignment: Alignment.center,)),
           FutureBuilder<DetailResult>(
             future: _service.byId(_searchResult.id),
             builder: (context, snapshot){
