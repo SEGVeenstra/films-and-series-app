@@ -1,3 +1,4 @@
+import 'package:films_and_series/films_and_series/models/detail_result.dart';
 import 'package:films_and_series/films_and_series/models/search_result.dart';
 import 'package:films_and_series/films_and_series/services/omdb_service.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,23 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(title: Text(_searchResult.title),),
+      body: Column(
+        children: <Widget>[
+          Image.network(_searchResult.poster, height: 300.0, width: double.maxFinite, alignment: Alignment.center,),
+          FutureBuilder<DetailResult>(
+            future: _service.byId(_searchResult.id),
+            builder: (context, snapshot){
+              if(!snapshot.hasData)
+                return Center(child: CircularProgressIndicator(),);
+              else
+                return Text(snapshot.data.plot);
+            },
+          )
+        ],
+      ),
+    );
   }
 }
 
