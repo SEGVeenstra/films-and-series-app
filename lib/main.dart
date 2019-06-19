@@ -42,6 +42,9 @@ class _MyAppState extends State<MyApp> {
                   children:
                       List.generate(snapshot.data.results.length, (index) {
                     return ListTile(
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage()));
+                      },
                       title: Text(snapshot.data.results[index].title),
                       leading:
                           Image.network(snapshot.data.results[index].poster),
@@ -59,3 +62,11 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+class DetailPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
