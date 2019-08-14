@@ -1,3 +1,4 @@
+import 'package:condition/condition.dart';
 import 'package:films_and_series/films_and_series/models/detail_result.dart';
 import 'package:films_and_series/films_and_series/models/search_result.dart';
 import 'package:films_and_series/films_and_series/services/omdb_service.dart';
@@ -24,17 +25,16 @@ class DetailPage extends StatelessWidget {
             ),
             FutureBuilder<DetailResult>(
               future: Provider.of<OmdbService>(context).byId(_searchResult.id),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData)
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                else
-                  return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(snapshot.data.plot),
-                  );
-              },
+              builder: (context, snapshot) => Conditioned.boolean(
+                snapshot.hasData,
+                trueBuilder: () => Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(snapshot.data.plot),
+                ),
+                falseBuilder: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
             ),
           ],
         ),
