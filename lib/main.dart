@@ -1,5 +1,6 @@
 import 'package:films_and_series/films_and_series/models/detail_result.dart';
 import 'package:films_and_series/films_and_series/models/search_result.dart';
+import 'package:films_and_series/films_and_series/pages/search_page.dart';
 import 'package:films_and_series/films_and_series/services/omdb_service.dart';
 import 'package:flutter/material.dart';
 
@@ -7,63 +8,14 @@ import 'films_and_series/pages/detail_page.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
-
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  final OmdbService _service = OmdbService();
-
-  var _query = "";
+class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
-      home: Scaffold(
-        appBar: AppBar(
-          leading: Icon(Icons.search),
-          title: TextField(
-            onChanged: (text){
-              setState(() {
-                _query = text;
-              });
-            },
-          ),
-        ),
-          body: _query.length > 2 ? FutureBuilder<SearchResult>(
-            future: _service.search(_query, 1),
-            builder: (context, snapshot){
-              if(!snapshot.hasData)
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              else if (snapshot.data.response)
-                return ListView(
-                  children: List.generate(snapshot.data.results.length, (index) {
-                    return ListTile(
-                      onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(snapshot.data.results[index], _service)));
-                      },
-                      title: Text(snapshot.data.results[index].title),
-                      subtitle: Text(snapshot.data.results[index].year),
-                      leading: Image.network(snapshot.data.results[index].poster),
-                    );
-                  }),
-                );
-              else
-                return Center(
-                  child: Text(snapshot.data.error),
-                );
-            },
-          ) : Center(
-            child: Text('Type atleast 3 or more characters to search!'),
-          ),
-      ),
+      home: SearchPage(),
     );
   }
 }
