@@ -11,6 +11,11 @@ class SearchPage extends StatelessWidget {
 
   final _queryNotifier = ValueNotifier('');
 
+  Function(Result) _navCallBack(BuildContext context) => (Result selectedResult) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => DetailPage(selectedResult)));
+  };
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -21,17 +26,14 @@ class SearchPage extends StatelessWidget {
         ),
         body: ValueListenableBuilder(
           valueListenable: _queryNotifier,
-          builder: (context, query, child) => _queryNotifier.value.length > 2
+          builder: (context, query, child) => query.length > 2
               ? FutureBuilder<SearchResult>(
               future: Provider.of<OmdbService>(context).search(query, 1),
               builder: (context, snapshot) {
                 if (!snapshot.hasData)
                   return Center(child: CircularProgressIndicator());
                 else if (snapshot.data.response)
-                  return ResultListWidget(snapshot.data.results, (selectedResult) {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => DetailPage(selectedResult)));
-                  });
+                  return ResultListWidget(snapshot.data.results, _navCallBack(context));
                 else
                   return CustomErrorWidget(snapshot.data.error);
               })

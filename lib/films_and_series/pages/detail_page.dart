@@ -15,6 +15,7 @@ class DetailPage extends StatelessWidget {
           title: Text(_searchResult.title),
         ),
         body: Column(
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Image.network(
               _searchResult.poster,
@@ -22,17 +23,19 @@ class DetailPage extends StatelessWidget {
               width: double.maxFinite,
               alignment: Alignment.center,
             ),
-            FutureBuilder<DetailResult>(
-                future:
-                    Provider.of<OmdbService>(context).byId(_searchResult.id),
-                builder: (context, snapshot) => !snapshot.hasData
-                    ? Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(snapshot.data.plot),
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(),
-                      )),
+            Expanded(
+              child: FutureBuilder<DetailResult>(
+                  future:
+                      Provider.of<OmdbService>(context).byId(_searchResult.id),
+                  builder: (context, snapshot) => snapshot.hasData
+                      ? Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(snapshot.data.plot),
+                        )
+                      : Center(
+                          child: CircularProgressIndicator(),
+                        )),
+            ),
           ],
         ),
       );
