@@ -2,8 +2,7 @@ import 'package:films_and_series/films_and_series/models/search_result.dart';
 import 'package:films_and_series/films_and_series/services/omdb_service.dart';
 import 'package:films_and_series/films_and_series/widgets/result_list.dart';
 import 'package:flutter/material.dart';
-
-import 'detail_page.dart';
+import 'package:provider/provider.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -11,7 +10,6 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final OmdbService _service = OmdbService();
   var _query = "";
 
   _setQuery(String query) {
@@ -34,14 +32,14 @@ class _SearchPageState extends State<SearchPage> {
               child: Text('Type atleast 3 or more characters to search!'),
             )
           : FutureBuilder<SearchResult>(
-              future: _service.search(_query, 1),
+              future: Provider.of<OmdbService>(context).search(_query, 1),
               builder: (context, snapshot) {
                 if (!snapshot.hasData)
                   return Center(
                     child: CircularProgressIndicator(),
                   );
                 else if (snapshot.data.response)
-                  return ResultList(snapshot.data.results, _service);
+                  return ResultList(snapshot.data.results);
                 else
                   return Center(
                     child: Text(snapshot.data.error),
