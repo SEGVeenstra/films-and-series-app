@@ -84,8 +84,10 @@ class DetailPage extends StatelessWidget {
             future: _service.byId(_searchResult.id),
             builder: (context, snapshot){
               if(!snapshot.hasData)
-                return Center(
-                  child: CircularProgressIndicator(),
+                return Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 );
               else
                 return Padding(
